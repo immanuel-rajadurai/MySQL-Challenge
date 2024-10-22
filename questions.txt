@@ -1,0 +1,322 @@
+USE sakila;
+
+-- 1
+SELECT * FROM actor;
+
+-- 2
+
+select * 
+from actor
+where first_name="John";
+
+-- 3
+
+select * 
+from actor
+where last_name="Neeson";
+
+-- 4
+
+select *
+from actor
+where actor_id%10=0;
+
+-- 5
+
+select description
+from film
+where film_id=100;
+
+-- 6
+
+select *
+from film
+where rating="R";
+
+-- 7
+
+select *
+from film
+where rating!="R";
+
+
+-- 8
+
+select *
+from film
+order by length;
+
+-- 9
+
+select *
+from film
+order by length desc;
+
+-- 10
+
+select *
+from film
+where special_features like '%Deleted Scenes%';
+
+-- 11
+
+select last_name
+from actor
+group by last_name
+having count(last_name) < 2
+order by last_name desc;
+
+-- 12 
+
+select last_name
+from actor
+group by last_name
+having count(last_name) > 1
+order by count(last_name) desc;
+
+-- 13
+
+select actor.actor_id, actor.first_name, count(actor.actor_id)
+from actor join film_actor on actor.actor_id=film_actor.actor_id
+GROUP BY actor.actor_id
+order by count(actor.actor_id) desc
+limit 1;
+
+-- 14
+
+select release_year
+from film 
+where title="Academy Dinosaur"
+limit 1;
+
+-- 15
+
+select AVG(length)
+from film
+limit 1;
+
+-- 16
+
+select film_category.category_id, avg(film.length) 
+from film
+join film_category on film.film_id = film_category.film_id
+group by film_category.category_id;
+
+-- 17
+
+select *
+from film
+where description like '%robot%';
+
+-- 18
+select count(*)
+from film
+where release_year = 2010;
+
+-- 19 
+
+select film.title
+from film
+join film_category on film.film_id = film_category.film_id
+join category on film_category.category_id = category.category_id
+where category.name = 'Horror';
+
+-- 20
+
+select first_name, last_name
+from staff
+where staff_id = 2;
+
+-- 21
+
+select f.title
+from actor a
+join film_actor fa on a.actor_id = fa.actor_id
+join film f on fa.film_id = f.film_id
+where a.first_name = 'Fred' and a.last_name = 'Costner';
+
+-- 22
+
+select count(distinct country)
+from country;
+
+-- 23
+
+select name
+from language
+order by name desc;
+
+-- 24
+
+select first_name, last_name
+from actor
+where last_name like '%son'
+order by first_name;
+
+-- 25
+
+select c.name, count(fc.film_id) as film_count
+from category c
+join film_category fc on c.category_id = fc.category_id
+group by c.name
+order by film_count desc
+limit 1;
+
+-- World questions
+
+-- 1
+
+select count(*)
+from city
+where countrycode = 'USA';
+
+-- 2
+
+select population, lifeexpectancy
+from country
+where name = 'Argentina';
+
+-- 3
+
+select name, lifeexpectancy
+from country
+where lifeexpectancy is not null
+order by lifeexpectancy desc
+limit 1;
+
+-- 4
+
+select city.name as capital_city
+from country
+join city on country.capital = city.id
+where country.name = 'Spain';
+
+-- 5
+
+select distinct countrylanguage.language
+from country
+join countrylanguage on country.code = countrylanguage.countrycode
+where country.region = 'Southeast Asia';
+
+-- 6
+
+select name
+from city
+where name like 'F%'
+limit 25;
+
+-- 7
+
+select count(city.id)
+from city
+join country on city.countrycode = country.code
+where country.name = 'China';
+
+-- 8
+
+select name, population
+from country
+where population is not null and population > 0
+order by population asc
+limit 1;
+
+-- 9
+
+select count(*) as number_of_countries
+from country;
+
+-- 10
+
+select name, surfacearea
+from country
+order by surfacearea desc
+limit 10;
+
+-- 11
+
+select name, population
+from city
+where countrycode = 'JPN'
+order by population desc
+limit 5;
+
+-- 12
+
+select *
+ from country;
+
+select name, code
+from country
+where headofstate = 'Elisabeth II';
+
+update country
+set headofstate = 'Elizabeth II'
+where headofstate = 'Elisabeth II';
+
+-- 13
+
+select name, population/surfacearea as population_to_area_ratio
+from country
+where population/surfacearea > 0
+order by population_to_area_ratio asc
+limit 10;
+
+-- 14
+
+select distinct language
+from countrylanguage;
+
+-- 15
+
+select name, gnp
+from country
+order by gnp desc
+limit 10;
+
+-- 16
+
+select country.name, count(countrylanguage.language) as number_of_languages
+from country
+join countrylanguage on country.code = countrylanguage.countrycode
+group by country.name
+order by number_of_languages desc
+limit 10;
+
+-- 17
+
+select country.name
+from country
+join countrylanguage on country.code = countrylanguage.countrycode
+where countrylanguage.language = 'German' and countrylanguage.percentage > 50;
+
+-- 18
+
+select name, lifeexpectancy
+from country
+where lifeexpectancy is not null and lifeexpectancy > 0
+order by lifeexpectancy asc
+limit 1;
+
+-- 19
+
+select governmentform, count(*) as occurrences
+from country
+group by governmentform
+order by occurrences desc
+limit 3;
+
+-- 20
+
+select count(*) as number_of_countries_independent
+from country
+where indepyear is not null;
+
+
+-- movie lens questions
+
+
+
+
+
+
+
